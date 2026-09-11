@@ -1,0 +1,60 @@
+<Project>
+
+  <PropertyGroup>
+    <EnableGenetecSdk Condition="'$(EnableGenetecSdk)' == ''">true</EnableGenetecSdk>
+  </PropertyGroup>
+
+  <!-- An explicit GenetecSdkPath (MSBuild property or environment variable) always wins. -->
+  <PropertyGroup Condition="'$(EnableGenetecSdk)' == 'true' AND '$(GenetecSdkPath)' != '' AND '$(GenetecSdkDll)' == '' AND Exists('$(GenetecSdkPath)\Genetec.Sdk.dll')">
+    <GenetecSdkDll>Genetec.Sdk.dll</GenetecSdkDll>
+  </PropertyGroup>
+
+  <!-- Local, non-repository SDK copy used to compile against the deployment server's exact 5.12 build. -->
+  <PropertyGroup Condition="'$(EnableGenetecSdk)' == 'true' AND '$(GenetecSdkPath)' == '' AND Exists('C:\GenetecSdk\5.12\net8.0-windows\Genetec.Sdk.dll')">
+    <GenetecSdkPath>C:\GenetecSdk\5.12\net8.0-windows</GenetecSdkPath>
+    <GenetecSdkDll>Genetec.Sdk.dll</GenetecSdkDll>
+  </PropertyGroup>
+
+  <!-- Shared Genetec Platform SDK detection (SDK 5.13 and 5.12) -->
+  <!-- Imported by SentinelBridge.Core, SentinelBridge.Service and SentinelBridge.ConfigUI.
+       Keeps the detection conditionals in a single place; duplicate per-project
+       blocks would drift. DefineConstants are NOT propagated via ProjectReference. -->
+
+  <!-- SDK 5.13 (.NET 8 consolidated Genetec.Sdk.dll) -->
+  <PropertyGroup Condition="'$(EnableGenetecSdk)' == 'true' AND '$(GenetecSdkPath)' == '' AND Exists('C:\Program Files (x86)\Genetec Security Center 5.13 SDK\net8.0-windows\Genetec.Sdk.dll')">
+    <GenetecSdkPath>C:\Program Files (x86)\Genetec Security Center 5.13 SDK\net8.0-windows</GenetecSdkPath>
+    <GenetecSdkDll>Genetec.Sdk.dll</GenetecSdkDll>
+  </PropertyGroup>
+  <!-- SDK 5.12 - check net8.0-windows first, then x64 -->
+  <PropertyGroup Condition="'$(EnableGenetecSdk)' == 'true' AND '$(GenetecSdkPath)' == '' AND Exists('C:\Program Files (x86)\Genetec Security Center 5.12 SDK\net8.0-windows\Genetec.Sdk.dll')">
+    <GenetecSdkPath>C:\Program Files (x86)\Genetec Security Center 5.12 SDK\net8.0-windows</GenetecSdkPath>
+    <GenetecSdkDll>Genetec.Sdk.dll</GenetecSdkDll>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(EnableGenetecSdk)' == 'true' AND '$(GenetecSdkPath)' == '' AND Exists('C:\Program Files (x86)\Genetec Security Center 5.12 SDK\x64\Genetec.Sdk.dll')">
+    <GenetecSdkPath>C:\Program Files (x86)\Genetec Security Center 5.12 SDK\x64</GenetecSdkPath>
+    <GenetecSdkDll>Genetec.Sdk.dll</GenetecSdkDll>
+  </PropertyGroup>
+  <!-- SDK 5.12 legacy DLL name -->
+  <PropertyGroup Condition="'$(EnableGenetecSdk)' == 'true' AND '$(GenetecSdkPath)' == '' AND Exists('C:\Program Files (x86)\Genetec Security Center 5.12 SDK\x64\Genetec.SecurityCenter.SDK.dll')">
+    <GenetecSdkPath>C:\Program Files (x86)\Genetec Security Center 5.12 SDK\x64</GenetecSdkPath>
+    <GenetecSdkDll>Genetec.SecurityCenter.SDK.dll</GenetecSdkDll>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(GenetecSdkPath)' != ''">
+    <Reference Include="Genetec.Sdk" Condition="'$(GenetecSdkDll)' == 'Genetec.Sdk.dll'">
+      <HintPath>$(GenetecSdkPath)\Genetec.Sdk.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Genetec.SecurityCenter.SDK" Condition="'$(GenetecSdkDll)' == 'Genetec.SecurityCenter.SDK.dll'">
+      <HintPath>$(GenetecSdkPath)\Genetec.SecurityCenter.SDK.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Define GENETEC_SDK_AVAILABLE when any supported SDK is found -->
+  <PropertyGroup Condition="'$(GenetecSdkPath)' != ''">
+    <DefineConstants>$(DefineConstants);GENETEC_SDK_AVAILABLE</DefineConstants>
+  </PropertyGroup>
+
+</Project>
+
