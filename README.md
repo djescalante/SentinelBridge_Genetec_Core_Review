@@ -1,5 +1,8 @@
 # SentinelBridge — extracto de integración con Genetec
 
+> **Idioma / Language:** Español | [English](README_EN.md)  
+> **Documento técnico:** [DOCUMENTACION_TECNICA.md](DOCUMENTACION_TECNICA.md) ([English](DOCUMENTACION_TECNICA_EN.md))
+
 Este paquete contiene únicamente el código necesario para revisar cómo SentinelBridge se autentica contra Genetec Security Center, se suscribe a los eventos del Platform SDK y normaliza los eventos recibidos. No es una copia completa de la solución.
 
 ## Alcance

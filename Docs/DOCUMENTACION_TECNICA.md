@@ -1,7 +1,7 @@
 # Explicación técnica del código de integración con Genetec
 
 > **Idioma / Language:** Español | [English](DOCUMENTACION_TECNICA_EN.md)  
-> **README:** [README.md](README.md) ([English](README_EN.md))
+> **README:** [README.md](../README.md) ([English](../README_EN.md))
 
 ## 1. Objetivo
 
@@ -146,4 +146,3 @@ Las pruebas incluidas no prueban una sesión real. La aceptación en vivo requie
 - confirmar que `Engine.EventReceived` es el mecanismo adecuado para las familias de eventos seleccionadas;
 - confirmar permisos mínimos de la cuenta de servicio para recibir eventos y consultar las entidades origen;
 - confirmar cualquier requisito adicional de distribución de runtimes o certificados del Platform SDK.
-

@@ -31,8 +31,13 @@
 ## Material auxiliar
 
 - `Configuration/appsettings.genetec.example.json`
-- `README.md`
-- `DOCUMENTACION_TECNICA.md`
+- `README.md` (Español)
+- `README_EN.md` (English)
+- `DOCUMENTACION_TECNICA.md` (Español)
+- `DOCUMENTACION_TECNICA_EN.md` (English)
+- `Docs/DOCUMENTACION_TECNICA.md` (Español)
+- `Docs/DOCUMENTACION_TECNICA_EN.md` (English)
+- `Docs/Documento_Tecnico_SentinelBridge.pdf`
 - `MANIFIESTO.md`
 
 ## No incluido
